@@ -1,13 +1,14 @@
 #include<bits/stdc++.h>
 #include<graphics.h>
 #include<time.h>
-#include<stdio.h>
 
 
 int main()
 {
-    int gd = DETECT,gm,key_dir,foodX,foodY,snakeX[200],snakeY[200];
+    int gd = DETECT,gm,key_dir,foodX,foodY,snakeX[200],snakeY[200];   // DETECT = 0; gm = graph mode ; gd =graph diver
     initgraph(&gd,&gm,(char*)" ");
+
+    //initialization
 
     int  delayTime = 200;
     int food = 0;
@@ -23,8 +24,8 @@ int main()
 
     // initialization for display snake ;
 
-    snakeX[0] = 200,snakeY[0] = 200; // starting position of the snake
-    foodX = 200, foodY = 200; // starting position of food
+    snakeX[0] = 200,snakeY[0] = 200;
+    foodX = 200, foodY = 200;
     key_dir = rand()%2;
 
 
@@ -32,43 +33,42 @@ int main()
 
     while(game)
     {
-        setfillstyle(SOLID_FILL,WHITE); // initialization back ground color
-        bar(0,0,630,470);  //  initializing background size or wide (lower width 630 and right length 470)
+        setfillstyle(SOLID_FILL,WHITE);
+        bar(0,0,630,470);
 
-        setfillstyle(SOLID_FILL,BLACK);  // initializing boarder color
+        setfillstyle(SOLID_FILL,BLUE);
 
-        bar(0,0,630,10); // upper boarder width,length
+        bar(0,0,630,10);
 
-        bar(0,0,10,470); // right boarder width,length
+        bar(0,0,10,470);
 
-        bar(0,470,630,460); // lower boarder width,length
+        bar(0,470,630,460);
 
-        bar(620,10,630,470); // lower boarder width,length
+        bar(620,10,630,470);
 
 
-        setfillstyle(SOLID_FILL,RED); // initialization food color
+        setfillstyle(SOLID_FILL,BLACK);
 
-        if(snakeX[0] == foodX && snakeY[0] == foodY) // checking snake and food is in the same position or not
+        if(snakeX[0] == foodX && snakeY[0] == foodY)
         {
             length = length + 1;
             food = food +1 ;
-            delayTime = delayTime - 2;  // food consumed by snake then the delay time reduced and snake spread increase
+            delayTime = delayTime - 5;
 
-            bar(foodX,foodY,foodX + 10 , foodY + 10 ); // food poosition
+            bar(foodX,foodY,foodX + 10 , foodY + 10 );
 
             do{
                 foodX = (10 + rand() % 610);
                 foodY = (10 + rand() % 450);
-            }while(getpixel(foodX,foodY) != 0 && foodX > 10 && foodY>10); //condition for food visualization
+            }while(getpixel(foodX,foodY) != 0 && foodX > 10 && foodY>10);
 
-            // condition for not overlaping food or snake
+
 
             foodX = foodX / 10;
             foodX = foodX * 10;
             foodY = foodY / 10;
             foodY = foodY * 10;
 
-            // condition for food coordinate can't be 10, if so then the food will situated beside the boarder line every time
 
             if(foodX == 10){
                 foodX = rand() % 10 + 5;
@@ -82,11 +82,11 @@ int main()
 
         }
 
-        bar(foodX,foodY,foodX + 10, foodY + 10); // final  food position for display
+        bar(foodX,foodY,foodX + 10, foodY + 10);
 
         //setfillstyle(SOLID_FILL,	GREEN);
 
-        // condition for key direction
+        // DIRECTION
 
         if(GetAsyncKeyState(VK_RIGHT)||GetAsyncKeyState('D')){
             key_dir = 1;
@@ -152,7 +152,7 @@ int main()
            setcolor(RED);
            bar(snakeX[i], snakeY[i], snakeX[i] + 10, snakeY[i] + 10);
            if(i&1)
-            setfillstyle(SOLID_FILL,	YELLOW); // initialize snake color
+            setfillstyle(SOLID_FILL,RED); // initialize snake color
           else{
             setfillstyle(SOLID_FILL,	RED);
             bar(snakeX[i], snakeY[i], snakeX[i] + 5, snakeY[i] + 5);
@@ -181,26 +181,23 @@ int main()
 
     delay(delayTime);
 
-    // checking bumping in to boundary;
+    // END
 
     if(snakeX[0] >= 615 || snakeX[0] <=5 || snakeY[0] <= 5|| snakeY[0] >= 455){
-        std::cout<<"Snake bumped into the wall !!\n\n";
+        std::cout<<"OOPS! Snake bumped into the wall !!\n\n";
         game = false;
     }
-
-    // checking bumping into body
-
     if(snakeX[0] == snakeX[body] && snakeY[0] ==  snakeY[body] ){
-        std::cout<<"Snake bumped into itself !!!\n\n";
+        std::cout<<"OOPS! Snake bumped into itself !!!\n\n";
         game = false;
     }
 
     }
 
-    // game result
+    // RESULT
 
-    std::cout<<"Your score is : " <<(food-1)*10<<"\n\n";
-    std::cout<<"Game Over !!!\n\n";
+    std::cout<<"Your score is : " <<(food-1)<<"\n\n";
+    std::cout<<"Game Over !!!\t Try Again.\n\n";
     getch();
     return 0;
 }
